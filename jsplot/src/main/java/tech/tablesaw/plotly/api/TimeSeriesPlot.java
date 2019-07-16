@@ -5,6 +5,7 @@ import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.components.Figure;
 import tech.tablesaw.plotly.components.Layout;
+import tech.tablesaw.plotly.components.Line;
 import tech.tablesaw.plotly.traces.ScatterTrace;
 import tech.tablesaw.table.TableSliceGroup;
 
@@ -28,6 +29,10 @@ public class TimeSeriesPlot {
                     .showLegend(true)
                     .name(tableList.get(i).name())
                     .mode(ScatterTrace.Mode.LINE)
+                    .line(Line.builder()
+                        .shape(Line.Shape.SPLINE)
+                        .smoothing(1.2)
+                        .build())
                     .build();
         }
         return new Figure(layout, traces);

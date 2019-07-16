@@ -14,7 +14,7 @@ import java.util.Map;
 public class Layout {
 
     private static final int DEFAULT_HEIGHT = 600;
-    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_WIDTH = 1600;
     private final static String DEFAULT_TITLE = "";
     private final static String DEFAULT_PAPER_BG_COLOR = "#fff";
     private final static String DEFAULT_PLOT_BG_COLOR = "#fff";

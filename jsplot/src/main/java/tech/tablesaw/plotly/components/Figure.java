@@ -3,6 +3,9 @@ package tech.tablesaw.plotly.components;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
+
+import tech.tablesaw.plotly.traces.AbstractTrace;
+import tech.tablesaw.plotly.traces.ScatterTrace;
 import tech.tablesaw.plotly.traces.Trace;
 
 import java.io.IOException;
@@ -116,5 +119,34 @@ public class Figure {
 
     public Map<String, Object> getContext() {
         return context;
+    }
+    
+    public String asData() {
+        
+        StringBuilder builder = new StringBuilder();
+        String layoutJs = this.getLayout().asJavascript();
+        layoutJs = layoutJs.substring(layoutJs.indexOf("=") + 1);
+        layoutJs = layoutJs.trim();
+        layoutJs = layoutJs.substring(0, layoutJs.length() - 1);
+        builder.append("var x = {layout:" + layoutJs);
+
+        builder.append(", data:[ ");
+        for (int i = 0; i < data.length; i++) {
+
+            if (i < data.length - 1) {
+            
+                // builder.append("{");
+                String js = ((ScatterTrace)data[i]).asJavascript(i);
+                js = js.substring(js.indexOf("=") + 1);
+                js = js.substring(0, js.length() - 1);
+                builder.append(js);
+                if (i < data.length - 2) {
+                    
+                    builder.append(",");
+                }
+            }
+        }
+        builder.append("]}; {x:x}");
+        return builder.toString();
     }
 }
